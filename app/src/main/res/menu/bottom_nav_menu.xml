@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@+id/nav_mail_fragment"
+        android:enabled="true"
+        android:icon="@drawable/message"
+        android:title=""/>
+    <item
+        android:id="@+id/nav_people_fragment"
+        android:enabled="true"
+        android:icon="@drawable/people"
+        android:title=""/>
+    <item
+        android:id="@+id/nav_settings_fragment"
+        android:enabled="true"
+        android:icon="@drawable/settings"
+        android:title=""/>
+</menu>

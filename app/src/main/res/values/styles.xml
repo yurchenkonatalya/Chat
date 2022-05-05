@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="loginText" parent="Theme.Chat">
+        <item name="android:textColorHint">@color/gray</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="button" parent="Theme.Chat">
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@drawable/background_button</item>
+        <item name="android:gravity">center</item>
+        <item name="android:button">@null</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="helpText" parent="Theme.Chat">
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="nameText" parent="Theme.Chat">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="lastMsgText" parent="Theme.Chat">
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="link" parent="Theme.Chat">
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:textSize">11sp</item>
+        <item name="background">@null</item>
+    </style>
+
+    <style name="navBar" parent="Theme.Chat">
+        <item name="itemIconTint">@drawable/states_nav_bar</item>
+    </style>
+
+    <style name="splashTheme" parent="Theme.Chat">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+
+    <style name="search" parent="Theme.Chat">
+        <item name="android:tint">@color/gray</item>
+    </style>
+
+    <style name="roundedImageViewRounded" parent="Theme.Chat">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="circleAmountMsg">
+        <item name="android:background">@drawable/background_amount_msg</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="settingsStaticText">
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:textSize">12sp</item>
+        <item name="background">@null</item>
+    </style>
+
+    <style name="settingsDinamicText">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">12sp</item>
+        <item name="background">@null</item>
+    </style>
+
+    <style name="settingsName">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">20sp</item>
+        <item name="background">@null</item>
+        <item name="fontWeight">500</item>
+    </style>
+    <style name="item">
+        <item name="android:tint">@color/gray</item>
+    </style>
+
+    <style name="imageGalery" parent="Theme.Chat">
+        <item name="android:tint">@color/blue</item>
+    </style>
+
+    <style name="searchText" parent="Theme.Chat">
+        <item name="android:textColorHint">@color/gray</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:hint">Написать...</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="tvText">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">26sp</item>
+        <item name="background">@null</item>
+        <item name="fontWeight">500</item>
+    </style>
+    <style name="tvTime">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">11sp</item>
+        <item name="background">@null</item>
+    </style>
+</resources>
