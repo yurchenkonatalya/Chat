@@ -41,7 +41,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/image_card"
         app:layout_constraintEnd_toEndOf="@+id/image_card"
         android:text="1"
-        android:background="@drawable/circle"/>
+        android:background="@drawable/background_online"/>
 
     <ImageView
         android:layout_width="match_parent"

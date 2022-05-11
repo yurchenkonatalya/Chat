@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
     <item
-        android:id="@+id/nav_mail_fragment"
+        android:id="@+id/nav_dialogs_fragment"
         android:enabled="true"
         android:icon="@drawable/message"
-        android:title=""/>
+        tools:ignore="MenuTitle" />
     <item
-        android:id="@+id/nav_people_fragment"
+        android:id="@+id/nav_search_users_fragment"
         android:enabled="true"
         android:icon="@drawable/people"
-        android:title=""/>
+        tools:ignore="MenuTitle" />
     <item
         android:id="@+id/nav_settings_fragment"
         android:enabled="true"
         android:icon="@drawable/settings"
-        android:title=""/>
+        tools:ignore="MenuTitle" />
 </menu>

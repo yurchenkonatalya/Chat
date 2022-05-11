@@ -2,16 +2,51 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_signin">
+    android:id="@+id/nav_signin"
+    app:startDestination="@id/nav_signin_fragment">
     <fragment
         android:id="@+id/nav_signin_fragment"
-        android:name="com.example.chat.fragments.owners.OwnersFragment"
-        tools:layout="@layout/fragment_sign_in">
+        android:name="com.example.chat.fragments.signin.SigninFragment"
+        tools:layout="@layout/fragment_signin">
+
+        <action
+            android:id="@+id/action_nav_signin_fragment_to_registration_fragment"
+            app:destination="@id/nav_registration_fragment" />
+
+        <action
+            android:id="@+id/action_nav_signin_fragment_to_dialogs_fragment"
+            app:destination="@+id/nav_dialogs_fragment" />
     </fragment>
 
     <fragment
         android:id="@+id/nav_registration_fragment"
-        android:name="com.example.chat.fragments.settings.SettingsFragment"
-        tools:layout="@layout/fragment_registrate">
+        android:name="com.example.chat.fragments.registration.RegistrationFragment"
+        tools:layout="@layout/fragment_registration">
+        <action
+            android:id="@+id/action_nav_registration_fragment_to_signin_fragment"
+            app:destination="@+id/nav_signin_fragment" />
+
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_dialogs_fragment"
+        android:name="com.example.chat.fragments.dialogs.DialogsFragment"
+        tools:layout="@layout/fragment_dialogs">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_search_users_fragment"
+        android:name="com.example.chat.fragments.searchUsers.SearchUsersFragment"
+        tools:layout="@layout/fragment_search_users">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_settings_fragment"
+        android:name="com.example.chat.fragments.settings.SettingsFragment"
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_nav_settings_fragment_to_signin_fragment"
+            app:destination="@+id/nav_signin_fragment" />
+    </fragment>
+
 </navigation>

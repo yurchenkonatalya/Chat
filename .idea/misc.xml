@@ -3,13 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidProjects/Chat/app/src/main/res/drawable/image.xml" value="0.1935" />
+        <entry key="..\:/AndroidProjects/Chat/app/src/main/res/layout/fragment_dialog.xml" value="0.18541666666666667" />
+        <entry key="..\:/AndroidProjects/Chat/app/src/main/res/layout/fragment_registration.xml" value="0.18541666666666667" />
+        <entry key="..\:/AndroidProjects/Chat/app/src/main/res/layout/fragment_settings.xml" value="0.5" />
+        <entry key="..\:/AndroidProjects/Chat/app/src/main/res/layout/fragment_user.xml" value="0.25" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1315" />
         <entry key="app/src/main/res/drawable/background_amount_msg.xml" value="0.1315" />
         <entry key="app/src/main/res/drawable/background_button.xml" value="0.1315" />
         <entry key="app/src/main/res/drawable/background_edittext.xml" value="0.1315" />
+        <entry key="app/src/main/res/drawable/background_input.xml" value="0.1625" />
         <entry key="app/src/main/res/drawable/background_source_msg.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/backgroung_destinstion_msg.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/circle.xml" value="0.11" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1625" />
         <entry key="app/src/main/res/drawable/image.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/line.xml" value="0.1315" />
         <entry key="app/src/main/res/drawable/shape_imageview.xml" value="0.11" />
@@ -20,12 +27,19 @@
         <entry key="app/src/main/res/layout/activity_nav.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/activity_sign_in.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/activity_signin.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_dialog.xml" value="0.15678253173828127" />
+        <entry key="app/src/main/res/layout/fragment_dialogs.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/fragment_friend.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/fragment_mail.xml" value="0.15520833333333334" />
+        <entry key="app/src/main/res/layout/fragment_nav.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/fragment_owners.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_registrate.xml" value="0.19610507246376813" />
-        <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.21056416829427083" />
+        <entry key="app/src/main/res/layout/fragment_registration.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/fragment_search_users.xml" value="0.15520833333333334" />
+        <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.4776718139648438" />
+        <entry key="app/src/main/res/layout/fragment_sign_in.xml" value="0.15520833333333334" />
+        <entry key="app/src/main/res/layout/fragment_signin.xml" value="0.14006856282552096" />
         <entry key="app/src/main/res/layout/frame_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/frame_item_dialog.xml" value="0.22947692871093753" />
         <entry key="app/src/main/res/layout/frame_msg_destination.xml" value="0.15520833333333334" />
