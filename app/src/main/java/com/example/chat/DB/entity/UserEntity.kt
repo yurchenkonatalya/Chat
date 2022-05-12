@@ -2,13 +2,15 @@ package com.example.chat.DB.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 
-@Entity
+@Entity(primaryKeys = ["id", "isAuthorizeInfo"])
 data class UserEntity(
-    @PrimaryKey(autoGenerate = false)
+
     @ColumnInfo(name = "id")
-    var id:Long,
+    var id: Long,
+
+    @ColumnInfo(name = "isAuthorizeInfo")
+    var isAuthorizeInfo: Boolean,
 
     @ColumnInfo(name = "user_name")
     var user_name: String,
@@ -35,5 +37,6 @@ data class UserEntity(
     var user_last_active: String,
 
     @ColumnInfo(name = "user_photo")
-    var user_photo: String
+    var user_photo: String,
+    var responseIndex: Int
 )

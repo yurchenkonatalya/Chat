@@ -21,9 +21,7 @@ import kotlinx.coroutines.launch
 class SigninFragment : Fragment(R.layout.fragment_signin) {
     private val binding by viewBinding(FragmentSigninBinding::bind)
     lateinit var regLink: Button
-
     private val viewModel: SigninViewModel by viewModels()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         regLink = binding.linkReg
@@ -35,7 +33,6 @@ class SigninFragment : Fragment(R.layout.fragment_signin) {
         binding.buttonLogin.setOnClickListener {
             if (binding.editTextLogin.text.isEmpty() || binding.editTextPassword.text.isEmpty())
                 return@setOnClickListener
-
             viewModel.authorizeUser(
                 binding.editTextLogin.text.toString(),
                 binding.editTextPassword.text.toString()
@@ -44,9 +41,12 @@ class SigninFragment : Fragment(R.layout.fragment_signin) {
 
         lifecycleScope.launch {
             viewModel.authorizedResultFlow.collectLatest {
-                Log.e("CURDEST", id.toString()+ " " + it.toString()+ " " + findNavController().currentDestination.toString())
+                Log.e(
+                    "CURDEST",
+                    id.toString() + " " + it.toString() + " " + findNavController().currentDestination.toString()
+                )
                 if (it == SigninViewModel.States.SUCCESS) {
-                    if(findNavController().currentDestination?.id != R.id.nav_signin_fragment)
+                    if (findNavController().currentDestination?.id != R.id.nav_signin_fragment)
                         return@collectLatest
                     findNavController().navigate(
                         SigninFragmentDirections.actionNavSigninFragmentToDialogsFragment()
@@ -54,21 +54,21 @@ class SigninFragment : Fragment(R.layout.fragment_signin) {
                 } else {
                     binding.buttonLogin.isEnabled = it != SigninViewModel.States.LOADING
                     binding.progress.isVisible = it == SigninViewModel.States.LOADING
-
                     binding.editTextLogin.isVisible = it != SigninViewModel.States.LOADING
                     binding.editTextPassword.isVisible = it != SigninViewModel.States.LOADING
                     binding.chatImage.isVisible = it != SigninViewModel.States.LOADING
                     binding.buttonLogin.isVisible = it != SigninViewModel.States.LOADING
                     binding.textview.isVisible = it != SigninViewModel.States.LOADING
                     binding.linkReg.isVisible = it != SigninViewModel.States.LOADING
-
-                    if(it == SigninViewModel.States.ERROR){
-                        Toast.makeText(this@SigninFragment.context, "произошла ошибка", Toast.LENGTH_SHORT).show()
+                    if (it == SigninViewModel.States.ERROR) {
+                        Toast.makeText(
+                            this@SigninFragment.context,
+                            "произошла ошибка",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
-
         }
     }
-
 }

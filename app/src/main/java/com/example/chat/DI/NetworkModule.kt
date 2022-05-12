@@ -1,5 +1,6 @@
 package com.example.chat.DI
 
+import com.example.chat.network.api.user.MessageApi
 import com.example.chat.network.api.user.UserApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -48,4 +49,8 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideUserApi(retrofit: Retrofit): UserApi = retrofit.create(UserApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideMessageApi(retrofit: Retrofit): MessageApi = retrofit.create(MessageApi::class.java)
 }

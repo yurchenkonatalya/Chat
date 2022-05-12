@@ -2,9 +2,7 @@ package com.example.chat.fragments.signin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.chat.DI.NetworkModule
 import com.example.chat.model.AuthorizationRepository
-import com.example.chat.network.api.user.UserApi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,8 +13,7 @@ import javax.inject.Inject
 class SigninViewModel @Inject constructor(
     private val authorizationRepository: AuthorizationRepository
 ) : ViewModel() {
-
-    enum class States{
+    enum class States {
         NORMAL,
         LOADING,
         ERROR,
@@ -25,11 +22,10 @@ class SigninViewModel @Inject constructor(
 
     val authorizedResultFlow = MutableStateFlow<States>(States.LOADING)
 
-    init{
+    init {
         viewModelScope.launch(Dispatchers.IO) {
             val entity = authorizationRepository.checkLocalAuthorizedUser()
-
-            if(entity != null)
+            if (entity != null)
                 authorizedResultFlow.emit(States.SUCCESS)
             else
                 authorizedResultFlow.emit(States.NORMAL)
@@ -37,12 +33,10 @@ class SigninViewModel @Inject constructor(
     }
 
     fun authorizeUser(login: String, password: String) {
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             authorizedResultFlow.emit(States.LOADING)
-
-            val entity = authorizationRepository.authorizeUser(login ,password)
-
-            if(entity == null)
+            val entity = authorizationRepository.authorizeUser(login, password)
+            if (entity == null)
                 authorizedResultFlow.emit(States.ERROR)
             else
                 authorizedResultFlow.emit(States.SUCCESS)

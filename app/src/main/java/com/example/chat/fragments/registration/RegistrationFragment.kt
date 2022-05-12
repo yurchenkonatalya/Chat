@@ -41,22 +41,16 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
     private val viewModel: RegistrationViewModel by viewModels()
     @Inject
     lateinit var imageHelper: ImageHelper
-
     private var currentBirthday = "2002-09-08"
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadPhoto = binding.buttonLoadPhoto
         loadPhoto.setOnClickListener {
-//            getContentLauncher.launch(imageHelper.getImageIntent())
             select_image(it)
-
         }
         binding.buttonReg.setOnClickListener {
-
             if(binding.etLogin.text.isEmpty() || binding.etMail.text.isEmpty()|| binding.etName.text.isEmpty()||binding.etPassword.text.isEmpty()||binding.etPhone.text.isEmpty()||binding.etSurname.text.isEmpty() || selectedBitmap == null)
                 return@setOnClickListener
-
             viewModel.registerUser(
                 binding.etLogin.text.toString(),
                 binding.etPassword.text.toString(),
@@ -69,7 +63,6 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
                 selectedBitmap ?: return@setOnClickListener
             )
         }
-
         lifecycleScope.launch {
             viewModel.registratedResultFlow.collectLatest {
                 if (it == RegistrationViewModel.States.SUCCESS) {
@@ -80,7 +73,6 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
                     }
                 }
             }
-
         }
 
         binding.birthday.init(
@@ -89,25 +81,6 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
             8
         ) { day, year, month, dateOfMonth -> currentBirthday = "$year-${month+1}-${dateOfMonth}" }
     }
-
-//    private val getContentLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//        if (result.resultCode == Activity.RESULT_OK) {
-//
-//            lifecycleScope.launch(Dispatchers.Default) {
-//                viewModel.loadingStatus.value = 1
-//                try {
-//                    val uri = result.data?.data ?: return@launch
-//
-//                    viewModel.bitmap.value = imageHelper.uriToBitmap(uri)
-//
-//                } catch (e: Exception) { }
-//
-//                viewModel.onBitmapChanged()
-//
-//                viewModel.loadingStatus.value = 0
-//            }
-//        }
-//    }
 
     fun select_image(view: View) {
         activity?.let {
@@ -147,13 +120,6 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
         try {
             context?.let {
                 selectedBitmap = imageHelper.uriToBitmap(data?.data ?: return)
-
-//                if (selectedImage != null) {
-//                    if (Build.VERSION.SDK_INT >= 28) {
-//                        val source = ImageDecoder.createSource(it.contentResolver, selectedImage!!)
-//                        selectedBitmap = ImageDecoder.decodeBitmap(source)
-//                    }
-//                }
             }
         } catch (e: Exception) {
             e.printStackTrace()

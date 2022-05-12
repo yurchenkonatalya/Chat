@@ -20,9 +20,12 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.example.chat.BASE_IMAGE_URL
+import com.example.chat.InfoHelper
 import com.example.chat.R
 import com.example.chat.databinding.FragmentSettingsBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_settings.*
+import kotlinx.android.synthetic.main.fragment_user.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -32,15 +35,12 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     var selectedImage: Uri? = null
     var selectedBitmap: Bitmap? = null
     lateinit var imageView: ImageView
-
     private val viewModel: SettingsViewModel by viewModels()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         imageView = binding.imageCard
         imageView.setOnClickListener {
             select_image(it)
-
         }
         lifecycleScope.launch {
             viewModel.userFlow.collectLatest {
@@ -49,7 +49,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                     binding.tvMail.setText(it.user_mail)
                     binding.tvSurname.setText(it.user_surname)
                     binding.tvPhone.setText(it.user_phone)
-
                     context?.let { context ->
                         Glide
                             .with(context)
@@ -60,16 +59,20 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                             .centerCrop()
                             .into(binding.imageCard)
                     }
+                    it.user_birthday.let {
+                        tv_bithday.text =
+                            InfoHelper.systemDateTimeToDate(it)
+                    }
                 }
             }
         }
 
         binding.buttonLogout.setOnClickListener {
-                try {
-                    viewModel.logout()
-                } catch (e: java.lang.Exception) {
-                    Log.e("111111111", e.toString())
-                }
+            try {
+                viewModel.logout()
+            } catch (e: java.lang.Exception) {
+                Log.e("111111111", e.toString())
+            }
             findNavController().popBackStack(R.id.nav_dialogs_fragment, false)
             findNavController().navigate(
                 SettingsFragmentDirections.actionNavSettingsFragmentToSigninFragment()
@@ -92,7 +95,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             }
         }
     }
-
 
     override fun onRequestPermissionsResult(
         requestCode: Int,

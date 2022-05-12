@@ -3,8 +3,6 @@ package com.example.chat.network.api.user
 
 import com.example.chat.network.responses.AuthorizeUserResponse
 import com.example.chat.network.responses.StatusCodeResponse
-import com.google.android.gms.common.api.Response
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
@@ -31,5 +29,12 @@ interface UserApi {
         @Field("password") password: String,
     ): retrofit2.Response<AuthorizeUserResponse>
 
-
+    @FormUrlEncoded
+    @POST("user/getUserList.php")
+    suspend fun getUserList(
+        @Field("login") login: String,
+        @Field("password") password: String,
+        @Field("page") page: Int,
+        @Field("search") search: String?
+    ): retrofit2.Response<List<AuthorizeUserResponse>>
 }

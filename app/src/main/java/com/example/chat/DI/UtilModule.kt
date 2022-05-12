@@ -11,10 +11,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object UtilModule{
+object UtilModule {
 
     @Provides
     @Singleton
-    fun provideImageHelper(@ApplicationContext applicationContext: Context): ImageHelper = ImageHelper(applicationContext)
-
+    fun provideImageHelper(@ApplicationContext applicationContext: Context): ImageHelper =
+        ImageHelper(applicationContext)
 }

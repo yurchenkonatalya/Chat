@@ -5,11 +5,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.chat.DB.entity.AuthorizedUserEntity
-import com.example.chat.DB.entity.UserEntity
 
 @Dao
 interface AuthorizedUserDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(item: AuthorizedUserEntity)
 

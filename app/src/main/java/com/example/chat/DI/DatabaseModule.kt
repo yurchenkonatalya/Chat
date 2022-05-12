@@ -13,10 +13,9 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
-
     @Provides
     @Singleton
-    fun provideRoomDB(@ApplicationContext applicationContext: Context) : RoomSingleton =
+    fun provideRoomDB(@ApplicationContext applicationContext: Context): RoomSingleton =
         Room.databaseBuilder(
             applicationContext,
             RoomSingleton::class.java,
@@ -25,9 +24,13 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideRoomUserDao(database : RoomSingleton) = database.roomUserDao()
+    fun provideRoomUserDao(database: RoomSingleton) = database.roomUserDao()
 
     @Provides
     @Singleton
-    fun provideRoomAuthorizedUserDao(database : RoomSingleton) = database.roomAuthorizedUserDao()
+    fun provideRoomAuthorizedUserDao(database: RoomSingleton) = database.roomAuthorizedUserDao()
+
+    @Provides
+    @Singleton
+    fun provideDialogDao(database: RoomSingleton) = database.dialogDao()
 }

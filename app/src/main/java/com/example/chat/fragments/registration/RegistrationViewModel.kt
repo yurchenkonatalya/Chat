@@ -54,9 +54,7 @@ class RegistrationViewModel @Inject constructor(
                 birthday,
                 imageHelper.bitmapToBase64(photo, true)
             )
-
             Log.e("STATUSCODE", statusCode.toString())
-
             if (statusCode != 0)
                 registratedResultFlow.emit(States.ERROR)
             else
