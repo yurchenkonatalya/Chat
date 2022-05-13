@@ -5,12 +5,15 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.chat.DB.entity.DialogEntity
 import com.example.chat.R
 import com.example.chat.databinding.FragmentDialogsBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_dialog.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -44,10 +47,21 @@ class DialogsFragment : Fragment(R.layout.fragment_dialogs) {
     private fun initAdapter() {
         adapter = DialogsAdapter(
             object : DialogsAdapter.ItemClickListener {
-                override fun onClick(userId: Long) {
+                override fun onClick(item: DialogEntity) {
+                    val currentDestinationId = findNavController().currentDestination?.id ?: return
+                    if (currentDestinationId == R.id.nav_dialogs_fragment) {
+                        findNavController().navigate(
+                            DialogsFragmentDirections.actionNavDialogsFragmentToNavDialogFragment(
+                                item.opponent_id,
+                                item.opponent_photo,
+                                item.opponent_name,
+                                item.opponent_surname
+                            )
+                        )
+                        return
+                    }
                 }
             })
-
         layoutManager = LinearLayoutManager(this.context)
         adapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             var restored = false
@@ -62,6 +76,15 @@ class DialogsFragment : Fragment(R.layout.fragment_dialogs) {
                 }
             }
         })
+
+        adapter?.let { dialogAdapter ->
+            lifecycleScope.launch {
+                dialogAdapter.loadStateFlow.collect {
+                    if (layoutManager?.findFirstVisibleItemPosition() == 0)
+                        rvList.smoothScrollToPosition(0)
+                }
+            }
+        }
     }
 
     private fun initRecycler() {
@@ -79,7 +102,12 @@ class DialogsFragment : Fragment(R.layout.fragment_dialogs) {
     private fun initSearchView() {
         binding.editTextExplore.setText(viewModel.settings.search)
         binding.buttonExplore.setOnClickListener {
-            viewModel.onSearchStateChanged(binding.editTextExplore.text.toString())
+            var text = binding.editTextExplore.text.toString()
+            while (text.isNotEmpty() && text[text.length - 1] == ' ')
+                text = text.dropLast(1)
+            while (text.isNotEmpty() && text[0] == ' ')
+                text = text.drop(1)
+            viewModel.onSearchStateChanged(text)
         }
     }
 

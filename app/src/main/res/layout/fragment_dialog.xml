@@ -15,7 +15,6 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/button_back"
-
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:clickable="true"
@@ -28,7 +27,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:text="Name" />
+            android:text="" />
+
+        <TextView
+            android:id="@+id/tvOnline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="online" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/developer"
@@ -45,11 +51,20 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/liner_layout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolBar"
-        app:layout_constraintBottom_toTopOf="@+id/liner_layout"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolBar" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/liner_layout"
@@ -61,10 +76,10 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/button_attachment"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:clickable="true"
@@ -73,12 +88,13 @@
 
         <LinearLayout
             android:id="@+id/liner_layout2"
-            android:layout_width="300dp"
+            android:layout_width="0dp"
             android:layout_height="35dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="20dp"
+            android:layout_weight="1"
             android:background="@drawable/background_search"
             android:gravity="center_vertical">
 
@@ -95,15 +111,14 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/button_send"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="5dp"
             android:layout_marginBottom="20dp"
             android:clickable="true"
             android:focusable="true"
             app:srcCompat="@drawable/send" />
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

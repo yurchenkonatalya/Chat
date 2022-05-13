@@ -3,6 +3,7 @@ package com.example.chat.fragments.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.chat.DB.entity.UserEntity
+import com.example.chat.currentLocale
 import com.example.chat.model.AuthorizationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -28,6 +29,21 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val res = authorizationRepository.getAuthoresedUserInfo()
             userFlow.emit(res)
+        }
+    }
+
+    fun updateLocale() {
+        viewModelScope.launch(Dispatchers.IO) {
+            authorizationRepository.updateLocale(currentLocale)
+        }
+    }
+
+    fun changeUserPhoto(photo: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            authorizationRepository.changeUserPhoto(photo)
+            userFlow.emit(null)
+            authorizationRepository.checkLocalAuthorizedUser()
+            getAuthoresedUserInfo()
         }
     }
 }

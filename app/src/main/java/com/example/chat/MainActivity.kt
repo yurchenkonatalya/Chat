@@ -1,6 +1,7 @@
 package com.example.chat
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
@@ -10,13 +11,15 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.chat.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
-const val BASE_IMAGE_URL = "https://xaltura.by/chat/resources/userphotos/"
+var AUTHORIZED_USER_PHOTO: String? = null
+var AUTHORIZED_USER_ID: Long? = null
+var currentLocale = 0
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private val binding by viewBinding(ActivityMainBinding::bind)
-
+    private val viewModel: MainActivityViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -38,4 +41,23 @@ class MainActivity : AppCompatActivity() {
         else
             navController.popBackStack()
     }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.onViewAttach()
+    }
+
+    override fun onStop() {
+        viewModel.onViewStop()
+        super.onStop()
+    }
+}
+
+fun String.removeSpaces(): String {
+    var text = this
+    while (text.isNotEmpty() && text[text.length - 1] == ' ')
+        text = text.dropLast(1)
+    while (text.isNotEmpty() && text[0] == ' ')
+        text = text.drop(1)
+    return text
 }

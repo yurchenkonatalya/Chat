@@ -5,7 +5,6 @@ import androidx.room.Entity
 
 @Entity(primaryKeys = ["id", "isAuthorizeInfo"])
 data class UserEntity(
-
     @ColumnInfo(name = "id")
     var id: Long,
 

@@ -12,7 +12,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.chat.R
+import com.example.chat.currentLocale
 import com.example.chat.databinding.FragmentSigninBinding
+import com.example.chat.locale.LanguageEn
+import com.example.chat.locale.LanguageRu
+import com.example.chat.removeSpaces
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -33,9 +37,10 @@ class SigninFragment : Fragment(R.layout.fragment_signin) {
         binding.buttonLogin.setOnClickListener {
             if (binding.editTextLogin.text.isEmpty() || binding.editTextPassword.text.isEmpty())
                 return@setOnClickListener
+
             viewModel.authorizeUser(
-                binding.editTextLogin.text.toString(),
-                binding.editTextPassword.text.toString()
+                binding.editTextLogin.text.toString().removeSpaces(),
+                binding.editTextPassword.text.toString().removeSpaces()
             )
         }
 
@@ -70,5 +75,15 @@ class SigninFragment : Fragment(R.layout.fragment_signin) {
                 }
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val locale = if (currentLocale == 0) LanguageRu else LanguageEn
+        binding.editTextLogin.hint = locale.frSigninLogin
+        binding.editTextPassword.hint = locale.frSigninPassword
+        binding.buttonLogin.text = locale.frSigninEnter
+        binding.textview.text = locale.frSigninQuestion
+        binding.linkReg.text = locale.frSigninRegister
     }
 }

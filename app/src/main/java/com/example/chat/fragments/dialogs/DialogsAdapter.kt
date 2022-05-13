@@ -2,12 +2,14 @@ package com.example.chat.fragments.dialogs
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.chat.BASE_IMAGE_URL
+import com.example.chat.Constants.BASE_IMAGE_URL
 import com.example.chat.DB.entity.DialogEntity
+import com.example.chat.InfoHelper
 import com.example.chat.R
 import com.example.chat.databinding.FrameItemDialogBinding
 
@@ -15,7 +17,7 @@ class DialogsAdapter(
     private val itemClickListener: ItemClickListener
 ) : PagingDataAdapter<DialogEntity, RecyclerView.ViewHolder>(DialogListComparator) {
     interface ItemClickListener {
-        fun onClick(userId: Long)
+        fun onClick(item: DialogEntity)
     }
 
     class DialogListViewHolder(val binding: FrameItemDialogBinding) :
@@ -35,10 +37,15 @@ class DialogsAdapter(
                     val textName = item.opponent_name + " " + item.opponent_surname
                     textViewNameItem.text = textName
                     textViewBrandName.text = item.text
+                    if (item.text == "")
+                        textViewBrandName.text = "фотография"
                     textViewPrice.text = item.unread_msg_count.toString()
                     root.setOnClickListener {
-                        itemClickListener.onClick(item.id)
+                        itemClickListener.onClick(item)
                     }
+                    imageIsOnline.isVisible =
+                        InfoHelper.getCurrentTimeIsOnline(item.opponent_last_active)
+                    textViewPrice.isVisible = item.unread_msg_count > 0
                 }
             }
         }

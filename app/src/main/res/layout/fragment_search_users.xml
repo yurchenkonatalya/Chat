@@ -22,8 +22,7 @@
             android:id="@+id/button_explore"
             style="@style/search"
             android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
+            android:layout_height="20dp"
             android:clickable="true"
             android:focusable="true"
             app:srcCompat="@drawable/search" />
@@ -37,7 +36,6 @@
             android:layout_weight="1"
             android:autofillHints="Поиск"
             android:background="@android:color/transparent" />
-
     </LinearLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -63,11 +61,10 @@
         android:id="@+id/tvNoItems"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No owners"
+        android:text=""
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/swiper"
         app:layout_constraintEnd_toEndOf="@id/swiper"
         app:layout_constraintStart_toStartOf="@id/swiper"
         app:layout_constraintTop_toTopOf="@id/swiper" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

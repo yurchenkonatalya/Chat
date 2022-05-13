@@ -37,4 +37,26 @@ interface UserApi {
         @Field("page") page: Int,
         @Field("search") search: String?
     ): retrofit2.Response<List<AuthorizeUserResponse>>
+
+    @FormUrlEncoded
+    @POST("user/updateUserOnline.php")
+    suspend fun updateUserOnline(
+        @Field("login") login: String,
+        @Field("password") password: String
+    ): retrofit2.Response<StatusCodeResponse>
+
+    @FormUrlEncoded
+    @POST("user/getUsersInOnline.php")
+    suspend fun getUsersInOnline(
+        @Field("login") login: String,
+        @Field("password") password: String
+    ): retrofit2.Response<List<AuthorizeUserResponse>>
+
+    @FormUrlEncoded
+    @POST("user/changeUserPhoto.php")
+    suspend fun changeUserPhoto(
+        @Field("login") login: String,
+        @Field("password") password: String,
+        @Field("photo") photo: String
+    ): retrofit2.Response<StatusCodeResponse>
 }

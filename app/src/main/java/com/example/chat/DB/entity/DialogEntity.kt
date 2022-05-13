@@ -2,8 +2,9 @@ package com.example.chat.DB.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-@Entity(primaryKeys = ["id"])
+@Entity
 data class DialogEntity(
     @ColumnInfo(name = "id")
     var id: Long,
@@ -11,6 +12,8 @@ data class DialogEntity(
     var text: String,
     var info: String?,
     var unread_msg_count: Int,
+
+    @PrimaryKey(autoGenerate = false)
     var opponent_id: Long,
     var opponent_name: String,
     var opponent_surname: String,
@@ -19,4 +22,3 @@ data class DialogEntity(
     var opponent_last_active: String,
     var responseIndex: Int
 )
-

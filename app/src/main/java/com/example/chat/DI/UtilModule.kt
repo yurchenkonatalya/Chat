@@ -12,7 +12,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object UtilModule {
-
     @Provides
     @Singleton
     fun provideImageHelper(@ApplicationContext applicationContext: Context): ImageHelper =

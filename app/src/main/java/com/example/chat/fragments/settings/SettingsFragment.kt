@@ -19,15 +19,18 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
-import com.example.chat.BASE_IMAGE_URL
+import com.example.chat.Constants.BASE_IMAGE_URL
+import com.example.chat.ImageHelper
 import com.example.chat.InfoHelper
 import com.example.chat.R
+import com.example.chat.currentLocale
 import com.example.chat.databinding.FragmentSettingsBinding
+import com.example.chat.locale.LanguageEn
+import com.example.chat.locale.LanguageRu
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_settings.*
-import kotlinx.android.synthetic.main.fragment_user.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
@@ -36,6 +39,9 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     var selectedBitmap: Bitmap? = null
     lateinit var imageView: ImageView
     private val viewModel: SettingsViewModel by viewModels()
+
+    @Inject
+    lateinit var imageHelper: ImageHelper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         imageView = binding.imageCard
@@ -59,10 +65,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                             .centerCrop()
                             .into(binding.imageCard)
                     }
-                    it.user_birthday.let {
-                        tv_bithday.text =
-                            InfoHelper.systemDateTimeToDate(it)
-                    }
+                    binding.tvBithday.text =
+                        InfoHelper.systemDateTimeToDate(it.user_birthday)
                 }
             }
         }
@@ -78,6 +82,26 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 SettingsFragmentDirections.actionNavSettingsFragmentToSigninFragment()
             )
         }
+        binding.buttonChangeLanguage.setOnClickListener {
+            currentLocale = 1 - currentLocale
+            viewModel.updateLocale()
+            val locale = if (currentLocale == 0) LanguageRu else LanguageEn
+            binding.a.text = locale.frSettingsMail
+            binding.b.text = locale.frSettingsPhone
+            binding.c.text = locale.frSettingsBirthday
+            binding.buttonChangeLanguage.text = locale.frSettingsChangeLanguage
+            binding.buttonLogout.text = locale.frSettingsLogoutExit
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val locale = if (currentLocale == 0) LanguageRu else LanguageEn
+        binding.a.text = locale.frSettingsMail
+        binding.b.text = locale.frSettingsPhone
+        binding.c.text = locale.frSettingsBirthday
+        binding.buttonChangeLanguage.text = locale.frSettingsChangeLanguage
+        binding.buttonLogout.text = locale.frSettingsLogoutExit
     }
 
     fun select_image(view: View) {
@@ -95,6 +119,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             }
         }
     }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -121,7 +146,11 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                     if (Build.VERSION.SDK_INT >= 28) {
                         val source = ImageDecoder.createSource(it.contentResolver, selectedImage!!)
                         selectedBitmap = ImageDecoder.decodeBitmap(source)
-                        imageView.setImageBitmap(selectedBitmap)
+                        viewModel.changeUserPhoto(
+                            imageHelper.bitmapToBase64(
+                                selectedBitmap ?: return, true
+                            )
+                        )
                     }
                 }
             }

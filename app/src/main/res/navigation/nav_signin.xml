@@ -32,6 +32,32 @@
         android:id="@+id/nav_dialogs_fragment"
         android:name="com.example.chat.fragments.dialogs.DialogsFragment"
         tools:layout="@layout/fragment_dialogs">
+
+        <action
+            android:id="@+id/action_nav_dialogs_fragment_to_nav_dialog_fragment"
+            app:destination="@+id/nav_dialog_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_dialog_fragment"
+        android:name="com.example.chat.fragments.dialog.DialogFragment"
+        tools:layout="@layout/fragment_dialog">
+
+        <argument
+            android:name="userId"
+            app:argType="long" />
+
+        <argument
+            android:name="userPhoto"
+            app:argType="string" />
+
+        <argument
+            android:name="userName"
+            app:argType="string" />
+
+        <argument
+            android:name="userSurname"
+            app:argType="string" />
     </fragment>
 
     <fragment
@@ -58,6 +84,10 @@
         android:id="@+id/nav_user_fragment"
         android:name="com.example.chat.fragments.user.UserFragment"
         tools:layout="@layout/fragment_user">
+
+        <action
+            android:id="@+id/action_nav_user_fragment_to_nav_dialog_fragment"
+            app:destination="@+id/nav_dialog_fragment" />
 
         <argument
             android:name="userId"

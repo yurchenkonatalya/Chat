@@ -1,7 +1,9 @@
 package com.example.chat.network.mappers
 
 import com.example.chat.DB.entity.DialogEntity
+import com.example.chat.DB.entity.MessageEntity
 import com.example.chat.network.responses.DialogListResponse
+import com.example.chat.network.responses.MessageListResponse
 
 fun DialogListResponse.toDialogEntity(
     id_authorized_user: Long,
@@ -45,5 +47,18 @@ fun DialogListResponse.toDialogEntity(
             sender_last_active ?: return null
         },
         responseIndex
+    )
+}
+
+fun MessageListResponse.toMessageEntity(): MessageEntity? {
+    val messageInfo = if (info?.size ?: 0 > 0) info?.get(0) else null
+    return MessageEntity(
+        id ?: return null,
+        date ?: return null,
+        id_user_source ?: return null,
+        id_user_destination ?: return null,
+        message ?: return null,
+        messageInfo,
+        is_read ?: return null
     )
 }

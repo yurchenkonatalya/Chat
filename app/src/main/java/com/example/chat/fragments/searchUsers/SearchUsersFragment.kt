@@ -57,7 +57,6 @@ class SearchUsersFragment : Fragment(R.layout.fragment_search_users) {
                     }
                 }
             })
-
         layoutManager = LinearLayoutManager(this.context)
         adapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             var restored = false
@@ -89,7 +88,12 @@ class SearchUsersFragment : Fragment(R.layout.fragment_search_users) {
     private fun initSearchView() {
         binding.editTextExplore.setText(viewModel.settings.search)
         binding.buttonExplore.setOnClickListener {
-            viewModel.onSearchStateChanged(binding.editTextExplore.text.toString())
+            var text = binding.editTextExplore.text.toString()
+            while (text.isNotEmpty() && text[text.length - 1] == ' ')
+                text = text.dropLast(1)
+            while (text.isNotEmpty() && text[0] == ' ')
+                text = text.drop(1)
+            viewModel.onSearchStateChanged(text)
         }
     }
 
@@ -114,7 +118,6 @@ class SearchUsersFragment : Fragment(R.layout.fragment_search_users) {
                 layoutManager?.findFirstVisibleItemPosition() ?: 0
             )?.top ?: 0
         )
-
         super.onStop()
     }
 

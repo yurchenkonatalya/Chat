@@ -24,6 +24,9 @@ interface UserDao {
     @Query("SELECT * FROM UserEntity WHERE id = :id AND isAuthorizeInfo = :isAuthorizeInfo")
     fun getById(id: Long, isAuthorizeInfo: Boolean): UserEntity?
 
+    @Query("UPDATE UserEntity SET user_last_active = :last_active WHERE id =:id")
+    fun updateOnline(id: Long, last_active: String)
+
     @Query("SELECT * FROM UserEntity")
     fun get(): List<UserEntity>
 }

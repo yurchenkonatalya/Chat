@@ -1,12 +1,14 @@
 package com.example.chat.model
 
 import android.util.Log
-import com.example.chat.Constants
+import com.example.chat.*
 import com.example.chat.DB.dao.AuthorizedUserDao
+import com.example.chat.DB.dao.DialogDao
+import com.example.chat.DB.dao.LocaleDao
 import com.example.chat.DB.dao.UserDao
 import com.example.chat.DB.entity.AuthorizedUserEntity
+import com.example.chat.DB.entity.LocaleEntity
 import com.example.chat.DB.entity.UserEntity
-import com.example.chat.QueryExecutor
 import com.example.chat.fragments.searchUsers.SearchUserSettings
 import com.example.chat.network.api.user.UserApi
 import com.example.chat.network.mappers.toUserEntity
@@ -19,9 +21,17 @@ import retrofit2.Response
 class AuthorizationRepository(
     private val userApi: UserApi,
     private val userDao: UserDao,
-    private val authorizedUserDao: AuthorizedUserDao
+    private val dialogDao: DialogDao,
+    private val authorizedUserDao: AuthorizedUserDao,
+    private val localeDao: LocaleDao
 ) {
+    suspend fun updateLocale(locale: Int) {
+        localeDao.deleteAll()
+        localeDao.insert(LocaleEntity(locale))
+    }
+
     suspend fun checkLocalAuthorizedUser(): UserEntity? {
+        currentLocale = localeDao.get()?.locale ?: 0
         val authorizedEntity = authorizedUserDao.get() ?: return null
         val user = userDao.getById(authorizedEntity.id, true) ?: return null
         lateinit var response: Response<AuthorizeUserResponse>
@@ -37,6 +47,8 @@ class AuthorizationRepository(
             val entity = body.toUserEntity(user.user_password) ?: return null
             entity.isAuthorizeInfo = true
             userDao.insert(entity)
+            AUTHORIZED_USER_PHOTO = entity.user_photo
+            AUTHORIZED_USER_ID = entity.id
             return entity
         } else
             return null
@@ -56,6 +68,8 @@ class AuthorizationRepository(
             val entity = body.toUserEntity(password) ?: return null
             entity.isAuthorizeInfo = true
             userDao.insert(entity)
+            AUTHORIZED_USER_PHOTO = entity.user_photo
+            AUTHORIZED_USER_ID = entity.id
             authorizedUserDao.deleteAll()
             authorizedUserDao.insert(AuthorizedUserEntity(entity.id))
             return entity
@@ -93,7 +107,6 @@ class AuthorizationRepository(
         if (!response.isSuccessful)
             return null
         val body = response.body() ?: return null
-
         if (body.status_code != null) {
             return body.status_code
         } else
@@ -140,7 +153,6 @@ class AuthorizationRepository(
             ?.let {
                 userDao.getById(it.id, true)?.user_password ?: return Constants.NO_CONNECTION_CODE
             } ?: return Constants.NO_CONNECTION_CODE
-        Log.e("FFFFF", "$login $password ${settings.lastLoadedPage} ${settings.search}")
         val dataFromApi = QueryExecutor.getResponse {
             userApi.getUserList(login, password, settings.lastLoadedPage + 1, settings.search)
         } ?: return Constants.NO_CONNECTION_CODE
@@ -160,5 +172,63 @@ class AuthorizationRepository(
         }
         userDao.insertList(list)
         return Constants.STATUS_CODE_SUCCESS
+    }
+
+    suspend fun updateOnline() {
+        val login = authorizedUserDao.get()
+            ?.let { userDao.getById(it.id, true)?.user_nickname ?: return } ?: return
+        val password = authorizedUserDao.get()
+            ?.let { userDao.getById(it.id, true)?.user_password ?: return } ?: return
+        QueryExecutor.getResponse {
+            userApi.updateUserOnline(login, password)
+        }
+    }
+
+    val lastOnlineUsers: MutableList<UserEntity> = mutableListOf()
+    suspend fun getUsersInOnline() {
+        val login = authorizedUserDao.get()
+            ?.let { userDao.getById(it.id, true)?.user_nickname ?: return } ?: return
+        val password = authorizedUserDao.get()
+            ?.let { userDao.getById(it.id, true)?.user_password ?: return } ?: return
+        val dataFromApi = QueryExecutor.getResponse {
+            userApi.getUsersInOnline(login, password)
+        } ?: return
+        if (dataFromApi.isEmpty())
+            return
+        dataFromApi[0].status_code?.let {
+            return
+        }
+        if (dataFromApi[0].id == null)
+            return
+        for (item in lastOnlineUsers) {
+            userDao.updateOnline(item.id, "1970-12-12 00:00:00")
+            dialogDao.updateOnline(item.id, "1970-12-12 00:00:00")
+        }
+        lastOnlineUsers.clear()
+        for (index in dataFromApi.indices) {
+            val item = dataFromApi[index].toUserEntity("", false, 1)
+            item?.let {
+                lastOnlineUsers.add(item)
+                userDao.updateOnline(it.id, it.user_last_active)
+                dialogDao.updateOnline(it.id, it.user_last_active)
+            }
+        }
+    }
+
+    suspend fun changeUserPhoto(photo: String): Int {
+        var authorizedId = -1L
+        val login = authorizedUserDao.get()
+            ?.let {
+                authorizedId = it.id; userDao.getById(it.id, true)?.user_nickname
+                ?: return Constants.NO_CONNECTION_CODE
+            } ?: return Constants.NO_CONNECTION_CODE
+        val password = authorizedUserDao.get()
+            ?.let {
+                userDao.getById(it.id, true)?.user_password ?: return Constants.NO_CONNECTION_CODE
+            } ?: return Constants.NO_CONNECTION_CODE
+        QueryExecutor.getResponse {
+            userApi.changeUserPhoto(login, password, photo)
+        } ?: return Constants.NO_CONNECTION_CODE
+        return 0
     }
 }

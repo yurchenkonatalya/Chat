@@ -1,40 +1,50 @@
 package com.example.chat
 
+import android.icu.text.SimpleDateFormat
+import android.util.Log
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
+import java.util.*
+
 object InfoHelper {
-    fun getDeviceName(): String {
-        return android.os.Build.MODEL
-    }
-
-    fun checkPhoneIsValid(phone: String): Boolean {
-        if (phone.length != 9)
-            return false
-        val code = phone.substring(0, 2)
-        if (code != "29" && code != "33" && code != "25" && code != "44")
-            return false
-        val number = phone.substring(2)
-        if (!number.matches(Regex("[0-9]+")))
-            return false
-        return true
-    }
-
-    fun checkEmailIsValid(email: String): Boolean {
-        if (android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches())
-            return true
-        return false
-    }
-
     fun systemDateTimeToDate(dateTime: String): String {
         val date = dateTime.split(" ")[0]
         val dateMas = date.split("-")
         return dateMas.reversed().joinToString(".")
     }
 
-    fun systemDateTimeToDateTime(dateTime: String): String {
+    fun systemDateTimeToTime(dateTime: String): String {
         val mas = dateTime.split(" ")
-        val date = mas[0]
         val time = mas[1]
-        val dateMas = date.split("-")
         val timeMas = time.split(":")
-        return dateMas.reversed().joinToString(".") + " " + timeMas[0] + ":" + timeMas[1]
+        return timeMas[0] + ":" + timeMas[1]
+    }
+
+    fun getCurrentTimeIsOnline(serverTime: String): Boolean {
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val curTime = sdf.format(Date())
+        val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        val zone: ZoneId = ZoneId.systemDefault()
+        val start: ZonedDateTime = LocalDateTime.parse(serverTime, formatter).atZone(zone)
+        val end: ZonedDateTime = LocalDateTime.parse(curTime, formatter).atZone(zone)
+        val diffSeconds: Long = ChronoUnit.SECONDS.between(start, end)
+        if (diffSeconds <= 10)
+            return true
+        return false
+    }
+
+    fun getTimeOlder2(serverTime: String, curTime: String): Boolean {
+        val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        val zone: ZoneId = ZoneId.systemDefault()
+        val start: ZonedDateTime = LocalDateTime.parse(serverTime, formatter).atZone(zone)
+        val end: ZonedDateTime = LocalDateTime.parse(curTime, formatter).atZone(zone)
+        val diffSeconds: Long = ChronoUnit.MINUTES.between(start, end)
+        Log.e("OLDER", diffSeconds.toString())
+        if (kotlin.math.abs(diffSeconds) >= 2)
+            return true
+        return false
     }
 }

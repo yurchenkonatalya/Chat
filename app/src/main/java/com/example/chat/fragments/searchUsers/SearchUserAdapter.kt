@@ -1,17 +1,17 @@
 package com.example.chat.fragments.searchUsers
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.chat.BASE_IMAGE_URL
+import com.example.chat.Constants.BASE_IMAGE_URL
 import com.example.chat.DB.entity.UserEntity
+import com.example.chat.InfoHelper
 import com.example.chat.R
 import com.example.chat.databinding.FrameItemUserBinding
-import com.example.chat.network.responses.AuthorizeUserResponse
 
 class SearchUserAdapter(
     private val itemClickListener: ItemClickListener
@@ -19,8 +19,10 @@ class SearchUserAdapter(
     interface ItemClickListener {
         fun onClick(userId: Long)
     }
+
     class UserListViewHolder(val binding: FrameItemUserBinding) :
         RecyclerView.ViewHolder(binding.root)
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         getItem(position)?.let { item ->
             if (holder is UserListViewHolder) {
@@ -37,6 +39,8 @@ class SearchUserAdapter(
                     root.setOnClickListener {
                         itemClickListener.onClick(item.id)
                     }
+                    imageIsOnline.isVisible =
+                        InfoHelper.getCurrentTimeIsOnline(item.user_last_active)
                 }
             }
         }

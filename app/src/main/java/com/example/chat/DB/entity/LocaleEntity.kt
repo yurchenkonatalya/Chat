@@ -5,8 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class AuthorizedUserEntity(
+data class LocaleEntity(
     @PrimaryKey(autoGenerate = false)
-    @ColumnInfo(name = "id")
-    var id: Long
+    @ColumnInfo(name = "locale")
+    var locale: Int
 )

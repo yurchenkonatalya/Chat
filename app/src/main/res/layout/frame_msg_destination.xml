@@ -2,56 +2,74 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:paddingBottom="5dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/cl"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/backgroung_destinstion_msg">
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/image_card"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="5dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+        app:srcCompat="@drawable/me" />
 
+    <FrameLayout
+        android:id="@+id/fl"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        app:layout_constraintEnd_toStartOf="@id/image_card"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/image_card"
-            android:layout_width="0dp"
-            android:layout_height="300dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="30dp"
-
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="30dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/me" />
-
-        <TextView
-            android:id="@+id/tv_msg"
-            style="@style/settingsDinamicText"
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="30dp"
-            android:text="oirwenlv"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_card" />
+            android:layout_gravity="right"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/backgroung_destinstion_msg"
+            android:orientation="vertical"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="4dp"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/msgInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/me"
+                app:shapeAppearanceOverlay="@style/roundedImageViewRounded20" />
+
+            <TextView
+                android:id="@+id/tv_msg"
+                style="@style/settingsDinamicText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </FrameLayout>
 
     <TextView
         android:id="@+id/tv_time"
         style="@style/tvTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cl"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="5dp"
-        android:text="cjvhkbj"/>
+        android:text=""
+        app:layout_constraintEnd_toEndOf="@id/fl"
+        app:layout_constraintTop_toBottomOf="@id/fl" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

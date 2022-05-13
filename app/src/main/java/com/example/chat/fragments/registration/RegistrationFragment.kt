@@ -4,30 +4,22 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.example.chat.ImageHelper
-import com.example.chat.MainActivity
-import com.example.chat.R
+import com.example.chat.*
 import com.example.chat.databinding.FragmentRegistrationBinding
-import com.example.chat.fragments.signin.SigninFragmentDirections
-import com.example.chat.fragments.signin.SigninViewModel
+import com.example.chat.locale.LanguageEn
+import com.example.chat.locale.LanguageRu
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -39,6 +31,7 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
     var selectedBitmap: Bitmap? = null
     lateinit var loadPhoto: Button
     private val viewModel: RegistrationViewModel by viewModels()
+
     @Inject
     lateinit var imageHelper: ImageHelper
     private var currentBirthday = "2002-09-08"
@@ -49,27 +42,61 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
             select_image(it)
         }
         binding.buttonReg.setOnClickListener {
-            if(binding.etLogin.text.isEmpty() || binding.etMail.text.isEmpty()|| binding.etName.text.isEmpty()||binding.etPassword.text.isEmpty()||binding.etPhone.text.isEmpty()||binding.etSurname.text.isEmpty() || selectedBitmap == null)
+            if (binding.etLogin.text.isEmpty() || binding.etMail.text.isEmpty() || binding.etName.text.isEmpty() || binding.etPassword.text.isEmpty() || binding.etPhone.text.isEmpty() || binding.etSurname.text.isEmpty() || selectedBitmap == null)
                 return@setOnClickListener
+            var login = binding.etLogin.text.toString().removeSpaces()
+            var password = binding.etPassword.text.toString().removeSpaces()
+            var name = binding.etName.text.toString().removeSpaces()
+            var surname = binding.etSurname.text.toString().removeSpaces()
+            var phone = binding.etPhone.text.toString().removeSpaces()
+            var mail = binding.etMail.text.toString().removeSpaces()
+            var toastText: String? = null
+            if (login.contains(" "))
+                toastText = "логин не должен содержать пробелов"
+            if (password.contains(" "))
+                toastText = "пароль не должен содержать пробелов"
+            if (name.contains(" "))
+                toastText = "имя не должно содержать пробелов"
+            if (surname.contains(" "))
+                toastText = "фамилия не должна содержать пробелов"
+            if (phone.contains(" "))
+                toastText = "телефон не должен содержать пробелов"
+            if (mail.contains(" "))
+                toastText = "почта не должна содержать пробелов"
+            toastText?.let {
+                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             viewModel.registerUser(
-                binding.etLogin.text.toString(),
-                binding.etPassword.text.toString(),
-                binding.etName.text.toString(),
-                binding.etSurname.text.toString(),
-                binding.etPhone.text.toString(),
-                binding.etMail.text.toString(),
+                login,
+                password,
+                name,
+                surname,
+                phone,
+                mail,
                 "1",
                 currentBirthday,
                 selectedBitmap ?: return@setOnClickListener
             )
         }
+
         lifecycleScope.launch {
             viewModel.registratedResultFlow.collectLatest {
                 if (it == RegistrationViewModel.States.SUCCESS) {
                     (activity as MainActivity).onBackPressed()
                 } else {
-                    if(it == RegistrationViewModel.States.ERROR){
-                        Toast.makeText(this@RegistrationFragment.context, "Произошла ошибка", Toast.LENGTH_SHORT).show()
+                    if (it == RegistrationViewModel.States.ERROR) {
+                        Toast.makeText(
+                            this@RegistrationFragment.context,
+                            "Произошла ошибка",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else if (it == RegistrationViewModel.States.LOGIN_EXIST) {
+                        Toast.makeText(
+                            this@RegistrationFragment.context,
+                            "ошибка: логин уже занят",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
@@ -79,7 +106,7 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
             2002,
             8,
             8
-        ) { day, year, month, dateOfMonth -> currentBirthday = "$year-${month+1}-${dateOfMonth}" }
+        ) { day, year, month, dateOfMonth -> currentBirthday = "$year-${month + 1}-${dateOfMonth}" }
     }
 
     fun select_image(view: View) {
@@ -125,5 +152,19 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
             e.printStackTrace()
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val locale = if (currentLocale == 0) LanguageRu else LanguageEn
+        binding.etName.hint = locale.frRegistrationName
+        binding.etSurname.hint = locale.frRegistrationSurname
+        binding.etMail.hint = locale.frRegistrationMail
+        binding.birthdayLabel.text = locale.frRegistrationBirthday
+        binding.etPhone.hint = locale.frRegistrationPhone
+        binding.etLogin.hint = locale.frRegistrationLogin
+        binding.etPassword.hint = locale.frRegistrationPassword
+        binding.buttonLoadPhoto.text = locale.frRegistrationLoadPhoto
+        binding.buttonReg.text = locale.frSigninRegister
     }
 }

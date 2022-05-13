@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Chat</string>
+
+    <string name="signin_login">Login</string>
+    <string name="signin_password">Password</string>
+    <string name="signin_enter">Enter</string>
+    <string name="signin_question">Do you not have an account yet?</string>
+    <string name="signin_register">Register</string>
+    <string name="registration_name">Name</string>
+    <string name="registration_surname">Surname</string>
+    <string name="registration_mail">Mail</string>
+    <string name="registration_birthday">Birthday</string>
+    <string name="registration_phone">Phone</string>
+    <string name="registration_login">Login</string>
+    <string name="registration_password">Password</string>
+    <string name="registration_loadphoto">Load photo</string>
+    <string name="registration_register">Register</string>
+    <string name="settings_mail">Mail</string>
+    <string name="settings_phone">Phone</string>
+    <string name="settings_birthday">Birthday</string>
+    <string name="settings_change_language">Change photo</string>
+    <string name="settings_logout_exit">Exit</string>
+    <string name="user_write">Write</string>
+    <string name="dialog_write">Write…</string>
+    <string name="dialog_online">Online</string>
+
+</resources>

@@ -2,7 +2,6 @@ package com.example.chat
 
 import android.content.Context
 import android.content.ContextWrapper
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
@@ -11,7 +10,8 @@ import android.util.Base64
 import androidx.core.graphics.scale
 import androidx.exifinterface.media.ExifInterface
 import dagger.hilt.android.qualifiers.ApplicationContext
-import java.io.*
+import java.io.ByteArrayOutputStream
+import java.io.File
 
 class ImageHelper(
     @ApplicationContext
@@ -19,46 +19,6 @@ class ImageHelper(
 ) {
     private val storageDirectory: File =
         ContextWrapper(applicationContext).getDir("imageDir", Context.MODE_PRIVATE)
-
-    fun saveToStorage(bitmap: Bitmap, name: String) {
-        val file = File(storageDirectory, "$name.jpg")
-        var stream: FileOutputStream? = null
-        try {
-            stream = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            try {
-                stream?.close()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-        }
-    }
-
-    fun restoreFromStorage(name: String): Bitmap? {
-        return try {
-            val file = File(storageDirectory, "$name.jpg")
-            BitmapFactory.decodeStream(FileInputStream(file))
-        } catch (e: FileNotFoundException) {
-            null
-        }
-    }
-
-    fun deleteFromStorage(name: String) {
-        val file = File(storageDirectory, "$name.jpg")
-
-        if (file.exists())
-            file.delete()
-    }
-
-    fun getImageIntent(): Intent {
-        return Intent().apply {
-            type = "image/jpeg"
-            action = Intent.ACTION_GET_CONTENT
-        }
-    }
 
     fun uriToBitmap(uri: Uri): Bitmap? {
         var stream = applicationContext.contentResolver.openInputStream(uri) ?: return null
@@ -71,7 +31,7 @@ class ImageHelper(
         stream = applicationContext.contentResolver.openInputStream(uri) ?: return null
         var bitmap = BitmapFactory.decodeStream(stream) ?: return null
         stream.close()
-        var rotateDegrees = when (orientation) {
+        val rotateDegrees = when (orientation) {
             ExifInterface.ORIENTATION_ROTATE_90 -> 90
             ExifInterface.ORIENTATION_ROTATE_180 -> 180
             ExifInterface.ORIENTATION_ROTATE_270 -> 270

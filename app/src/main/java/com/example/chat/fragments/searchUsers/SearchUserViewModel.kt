@@ -1,6 +1,5 @@
 package com.example.chat.fragments.searchUsers
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -56,29 +55,24 @@ class SearchUserViewModel @Inject constructor(
         }
         loadingJob = viewModelScope.launch(Dispatchers.IO) {
             val res = authorizationRepository.loadUserListData(settings)
-            Log.e("RESSS", res.toString())
             if (!isActive)
                 return@launch
             when (res) {
                 Constants.STATUS_CODE_SUCCESS -> {
                     settings.lastLoadedPage++
-
                     loadingStatus.value = 0
-
                     if (settings.lastLoadedPage == 0)
                         loadData(onRefresh = false, saveFilter = true)
                 }
                 Constants.STATUS_CODE_EMPTY -> {
                     settings.endOfPagination = true
                     if (loadingStatus.value == 1)
-
                         loadingStatus.value = if (settings.lastLoadedPage == -1) 5 else 0
                     else
                         loadingStatus.value = 0
                 }
                 else -> {
                     if (loadingStatus.value == 1) {
-
                         loadingStatus.value = 2
                     } else
                         loadingStatus.value = 4
@@ -107,7 +101,7 @@ class SearchUserViewModel @Inject constructor(
     }
 
     fun onViewAttach(requireRestore: Boolean) {
-        var restore = requireRestore || inited
+        val restore = requireRestore || inited
         if (!restore || (!inited && settings.lastLoadedPage == -1))
             loadData(onRefresh = true, saveFilter = restore)
         inited = true

@@ -20,6 +20,8 @@
         <entry key="app/src/main/res/drawable/background_button.xml" value="0.1315" />
         <entry key="app/src/main/res/drawable/background_edittext.xml" value="0.1315" />
         <entry key="app/src/main/res/drawable/background_input.xml" value="0.1625" />
+        <entry key="app/src/main/res/drawable/background_online.xml" value="0.141" />
+        <entry key="app/src/main/res/drawable/background_search.xml" value="0.141" />
         <entry key="app/src/main/res/drawable/background_source_msg.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/backgroung_destinstion_msg.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/circle.xml" value="0.11" />
@@ -36,22 +38,23 @@
         <entry key="app/src/main/res/layout/activity_signin.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_dialog.xml" value="0.15678253173828127" />
-        <entry key="app/src/main/res/layout/fragment_dialogs.xml" value="0.15520833333333334" />
+        <entry key="app/src/main/res/layout/fragment_dialogs.xml" value="0.4311594202898551" />
         <entry key="app/src/main/res/layout/fragment_friend.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/fragment_mail.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/fragment_nav.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/fragment_owners.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_registrate.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_registration.xml" value="0.19610507246376813" />
-        <entry key="app/src/main/res/layout/fragment_search_users.xml" value="0.15520833333333334" />
+        <entry key="app/src/main/res/layout/fragment_search_users.xml" value="0.35789473684210527" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.4776718139648438" />
         <entry key="app/src/main/res/layout/fragment_sign_in.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/fragment_signin.xml" value="0.14006856282552096" />
+        <entry key="app/src/main/res/layout/fragment_user.xml" value="0.14945652173913043" />
         <entry key="app/src/main/res/layout/frame_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/frame_item_dialog.xml" value="0.22947692871093753" />
         <entry key="app/src/main/res/layout/frame_item_user.xml" value="0.3123359580052493" />
         <entry key="app/src/main/res/layout/frame_msg_destination.xml" value="0.15520833333333334" />
-        <entry key="app/src/main/res/layout/frame_msg_source.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/frame_msg_source.xml" value="0.4550796508789063" />
         <entry key="app/src/main/res/menu/add_photo.xml" value="0.14114583333333333" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.15520833333333334" />
       </map>

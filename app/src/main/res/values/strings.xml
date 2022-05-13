@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">Chat</string>
+    <string name="signin_login">Логин</string>
+    <string name="signin_password">Пароль</string>
+    <string name="signin_enter">Войти</string>
+    <string name="signin_question">У вас ещё нет аккаунта?</string>
+    <string name="signin_register">Зарегистрироваться</string>
+    <string name="registration_name">Имя</string>
+    <string name="registration_surname">Фамилия</string>
+    <string name="registration_mail">Почта</string>
+    <string name="registration_birthday">Дата рождения</string>
+    <string name="registration_phone">Телефон</string>
+    <string name="registration_login">Логин</string>
+    <string name="registration_password">Пароль</string>
+    <string name="registration_loadphoto">Загрузить фото</string>
+    <string name="registration_register">Зарегистрироваться</string>
+    <string name="settings_mail">Почта</string>
+    <string name="settings_phone">Фото</string>
+    <string name="settings_birthday">Дата рождения></string>
+    <string name="settings_change_language">Изменить язык</string>
+    <string name="settings_logout_exit">Выйти</string>
+    <string name="user_write">Написать</string>
+    <string name="dialog_write">Написать…</string>
+    <string name="dialog_online">В сети</string>
 </resources>

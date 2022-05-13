@@ -33,4 +33,12 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideDialogDao(database: RoomSingleton) = database.dialogDao()
+
+    @Provides
+    @Singleton
+    fun provideMessageDao(database: RoomSingleton) = database.messageDao()
+
+    @Provides
+    @Singleton
+    fun provideLocaleDao(database: RoomSingleton) = database.localeDao()
 }
